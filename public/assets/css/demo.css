@@ -105,3 +105,19 @@
   text-align: center;
   margin-top: 1rem;
 }
+/* Couleur du menu actif dans la sidebar */
+.menu-vertical .menu-item.active > .menu-link {
+    background-color: #16a34a !important; /* Vert forêt */
+    color: white !important;
+}
+
+/* Icône du menu actif */
+.menu-vertical .menu-item.active > .menu-link i {
+    color: white !important;
+}
+
+/* Hover du menu */
+.menu-vertical .menu-link:hover {
+    background-color: #059669 !important; /* Teal */
+    color: white !important;
+}
