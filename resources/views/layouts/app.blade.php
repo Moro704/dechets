@@ -12,6 +12,8 @@
      <link rel="stylesheet" href="{{ asset('css/ecoflux.css') }}"> 
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}">
     
+    @stack('styles')
+    
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
 </head>

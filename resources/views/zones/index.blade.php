@@ -32,12 +32,18 @@
             <td>{{ $zone->ville }}</td>
             <td>{{ $zone->description ?? 'N/A' }}</td>
             <td>
-                <a href="{{ route('zones.show', $zone->id) }}" class="btn btn-info btn-sm">Voir</a>
-                <a href="{{ route('zones.edit', $zone->id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                <a href="{{ route('zones.show', $zone->id) }}" class="btn btn-sm btn-info me-2" title="Voir">
+                    <i class="bx bx-show"></i>
+                </a>
+                <a href="{{ route('zones.edit', $zone->id) }}" class="btn btn-sm btn-warning me-2" title="Modifier">
+                    <i class="bx bx-edit"></i>
+                </a>
                 <form action="{{ route('zones.destroy', $zone->id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette zone ?')">Supprimer</button>
+                    <button type="submit" class="btn btn-sm btn-danger" title="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette zone ?')">
+                        <i class="bx bx-trash"></i>
+                    </button>
                 </form>
             </td>
         </tr>

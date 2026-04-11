@@ -43,15 +43,17 @@
 
         <h4>Informations Agent</h4>
     
-        <div class="mb-3">
-            <label>Matricule</label>
-            <input type="text" name="matricul" class="form-control" value="{{ old('matricul') }}" required>
-        </div>
-        <div class="mb-3">
+         <div class="mb-3">
             <label>Qualification</label>
-            <input type="text" name="qualification" class="form-control" value="{{ old('qualification') }}" required>
-
+            <select name="qualification" class="form-control">
+                <option value="">-- Choisir --</option>
+                <option value="agent_tri">Agent de trie</option>
+                <option value="agent_prod">Agent de Productions</option>
+                <option value="superviseur">Superviseur</option>
+                <option value="manager">Manager</option>
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary">Ajouter</button>
     </form>
-</div>
+
 @endsection

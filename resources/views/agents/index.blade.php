@@ -2,8 +2,16 @@
 
 @section('content')
   <div class="container">
-    <h1>Liste des Agents</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+     <div>
+       <h1 class="mb-1">Liste des Agents</h1>
+       <p class="text-muted mb-0">Gestion des Agents enregistrés dans le système.</p>
+     </div>
+    
     <a href="{{ route('agents.create') }}" class="btn btn-primary mb-3">Ajouter un Agent</a>
+
+    </div>
+    
     
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -32,14 +40,39 @@
                     <td>{{ $agent->user->address }}</td>
                     <td>{{ $agent->matricul }}</td>
                     <td>{{ $agent->qualification }}</td>
-                    <td>
-                        <a href="{{ route('agents.edit', $agent->id) }}" class="btn btn-sm btn-warning">Modifier</a>
-                        <form action="{{ route('agents.destroy', $agent->id) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet agent ?')">Supprimer</button>
-                        </form>
-                    </td>
+                   <td>
+    <div class="d-flex align-items-center gap-2 flex-nowrap">
+
+        {{-- Voir --}}
+        <a href="{{ route('agents.show', $agent->id) }}"
+           class="btn btn-sm btn-info"
+           title="Voir">
+            <i class="bx bx-show"></i>
+        </a>
+
+        {{-- Modifier --}}
+        <a href="{{ route('agents.edit', $agent->id) }}"
+           class="btn btn-sm btn-warning"
+           title="Modifier">
+            <i class="bx bx-edit"></i>
+        </a>
+
+        {{-- Supprimer --}}
+        <form action="{{ route('agents.destroy', $agent->id) }}"
+              method="POST" class="m-0">
+            @csrf
+            @method('DELETE')
+
+            <button type="submit"
+                class="btn btn-sm btn-danger"
+                title="Supprimer"
+                onclick="return confirm('Êtes-vous sûr ?')">
+                <i class="bx bx-trash"></i>
+            </button>
+        </form>
+
+    </div>
+</td>
                 </tr>
             @empty
                 <tr>

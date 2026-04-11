@@ -8,7 +8,6 @@ use App\Models\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
 class CollecteurController extends Controller
 {
     /**
@@ -17,8 +16,8 @@ class CollecteurController extends Controller
     public function index()
     {
         $collecteurs = Collecteur::with(['user', 'zone'])
-                                 ->latest()
-                                 ->paginate(15);
+            ->latest()
+            ->paginate(15);
 
         return view('collecteurs.index', compact('collecteurs'));
     }
@@ -29,6 +28,7 @@ class CollecteurController extends Controller
     public function create()
     {
         $zones = Zone::all();
+
         return view('collecteurs.create', compact('zones'));
     }
 
@@ -40,27 +40,30 @@ class CollecteurController extends Controller
         DB::transaction(function () use ($request) {
             // Création de l'utilisateur
             $user = User::create([
-                'name'      => $request->nom,
-                'email'     => $request->email,
-                'password'  => bcrypt($request->mot_de_passe),
+                'name' => $request->nom,
+                'email' => $request->email,
+                'password' => bcrypt($request->mot_de_passe),
                 'telephone' => $request->telephone,
-                'statut'    => $request->statut ?? 'actif',
-                'role'      => 'collecteur',
-                'address'   => $request->address,
+                'statut' => $request->statut ?? 'actif',
+                'role' => 'collecteur',
+                'address' => $request->address,
             ]);
+            $lastCollecteur = Collecteur::latest()->first();
+            $number = $lastCollecteur ? $lastCollecteur->id + 1 : 1;
+            $matricules = 'COL-'.str_pad($number, 4, '0', STR_PAD_LEFT);
 
             // Création du collecteur lié
             Collecteur::create([
-                'user_id'   => $user->id,
+                'user_id' => $user->id,
                 'numpermis' => $request->numpermis,
-                'matricul'  => $request->matricul,
-                'zone_id'   => $request->zone_id,
+                'matricul' => $matricules,
+                'zone_id' => $request->zone_id,
             ]);
-            
+
         });
 
         return redirect()->route('collecteurs.index')
-                         ->with('success', 'Collecteur créé avec succès !');
+            ->with('success', 'Collecteur créé avec succès !');
     }
 
     /**
@@ -69,6 +72,7 @@ class CollecteurController extends Controller
     public function show(Collecteur $collecteur)
     {
         $collecteur->load(['user', 'zone']);
+
         return view('collecteurs.show', compact('collecteur'));
     }
 
@@ -78,43 +82,43 @@ class CollecteurController extends Controller
     public function edit(Collecteur $collecteur)
     {
         $zones = Zone::all();
+
         return view('collecteurs.edit', compact('collecteur', 'zones'));
     }
 
     /**
      * Mettre à jour un collecteur et son utilisateur
      */
-   public function update(Request $request, Collecteur $collecteur)
+    public function update(Request $request, Collecteur $collecteur)
     {
-    
-    DB::transaction(function () use ($request, $collecteur) {
-        // Mise à jour de l'utilisateur
-        $collecteur->user->update([
-            'name'      => $request->nom,
-            'email'     => $request->email,
-            'telephone' => $request->telephone,
-            'address'   => $request->address,
-            'statut'    => $request->statut ?? $collecteur->user->statut,
-        ]);
 
-        // Mise à jour du collecteur
-        $collecteur->update([
-            'numpermis' => $request->numpermis,
-            'matricul'  => $request->matricul,
-            'zone_id'   => $request->zone_id,
-        ]);
-
-        // Mise à jour du mot de passe si fourni
-        if ($request->filled('mot_de_passe')) {
+        DB::transaction(function () use ($request, $collecteur) {
+            // Mise à jour de l'utilisateur
             $collecteur->user->update([
-                'password' => bcrypt($request->mot_de_passe)
+                'name' => $request->nom,
+                'email' => $request->email,
+                'telephone' => $request->telephone,
+                'address' => $request->address,
+                'statut' => $request->statut ?? $collecteur->user->statut,
             ]);
-        }
-    });
 
-    return redirect()->route('collecteurs.index')
-                     ->with('success', 'Collecteur mis à jour avec succès !');
-}
+            // Mise à jour du collecteur
+            $collecteur->update([
+                'numpermis' => $request->numpermis,
+                'zone_id' => $request->zone_id,
+            ]);
+
+            // Mise à jour du mot de passe si fourni
+            if ($request->filled('mot_de_passe')) {
+                $collecteur->user->update([
+                    'password' => bcrypt($request->mot_de_passe),
+                ]);
+            }
+        });
+
+        return redirect()->route('collecteurs.index')
+            ->with('success', 'Collecteur mis à jour avec succès !');
+    }
 
     /**
      * Supprimer un collecteur et son utilisateur
@@ -126,6 +130,6 @@ class CollecteurController extends Controller
         });
 
         return redirect()->route('collecteurs.index')
-                         ->with('success', 'Collecteur supprimé avec succès !');
+            ->with('success', 'Collecteur supprimé avec succès !');
     }
 }

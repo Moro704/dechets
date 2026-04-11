@@ -4,9 +4,16 @@
 
 @section('content')
 <div class="container">
-    <h1>Liste des Collecteurs</h1>
+     <!-- #region -->
+     <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+        <h1 class="mb-1">Liste des Collecteurs</h1>
+        <p class="text-muted mb-0">Gestion des collecteurs enregistrés dans le système.</p>
+    </div>
+     <a href="{{ route('collecteurs.create') }}" class="btn btn-primary mb-3">Ajouter un Collecteur</a>
+     </div>
 
-    <a href="{{ route('collecteurs.create') }}" class="btn btn-primary mb-3">Ajouter un Collecteur</a>
+   
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -36,14 +43,39 @@
                     <td>{{ $collecteur->user->address }}</td>
                 <td>{{ $collecteur->zone->nom ?? 'Non défini' }}</td>
                 <td>
-                    <a href="{{ route('collecteurs.edit', $collecteur->id) }}" class="btn btn-sm btn-warning">Modifier</a>
-                    <form action="{{ route('collecteurs.destroy', $collecteur->id) }}" method="POST" style="display:inline-block">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger"
-                            onclick="return confirm('Voulez-vous vraiment supprimer ce collecteur ?')">Supprimer</button>
-                    </form>
-                </td>
+                    
+    <div class="d-flex align-items-center gap-2 flex-nowrap">
+
+        {{-- Voir --}}
+        <a href="{{ route('collecteurs.show', $collecteur->id) }}"
+           class="btn btn-sm btn-info"
+           title="Voir">
+            <i class="bx bx-show"></i>
+        </a>
+
+        {{-- Modifier --}}
+        <a href="{{ route('collecteurs.edit', $collecteur->id) }}"
+           class="btn btn-sm btn-warning"
+           title="Modifier">
+            <i class="bx bx-edit"></i>
+        </a>
+
+        {{-- Supprimer --}}
+        <form action="{{ route('collecteurs.destroy', $collecteur->id) }}"
+              method="POST" class="m-0">
+            @csrf
+            @method('DELETE')
+            <button type="submit"
+                    class="btn btn-sm btn-danger"
+                    title="Supprimer"
+                    onclick="return confirm('Voulez-vous vraiment supprimer ?')">
+                <i class="bx bx-trash"></i>
+            </button>
+        </form>
+
+    </div>
+</td>
+                
             </tr>
             @empty
             <tr><td colspan="7" class="text-center">Aucun collecteur trouvé.</td></tr>

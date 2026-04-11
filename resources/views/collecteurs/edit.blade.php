@@ -47,10 +47,7 @@
             <label>Numéro permis</label>
             <input type="text" name="numpermis" class="form-control" value="{{ old('numpermis', $collecteur->numpermis) }}" required>
         </div>
-        <div class="mb-3">
-            <label>Matricule</label>
-            <input type="text" name="matricul" class="form-control" value="{{ old('matricul', $collecteur->matricul) }}" required>
-        </div>
+       
         <div class="mb-3">
             <label>Zone</label>
             <select name="zone_id" class="form-control">

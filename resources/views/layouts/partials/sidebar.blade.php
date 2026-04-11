@@ -22,36 +22,38 @@
               </a>
             </li>
 
-            <!-- Opération -->
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-recycle"></i>
-                <div data-i18n="Layouts">Opération</div>
-              </a>
-
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="{{ route('zones.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-map"></i>
-                    <div data-i18n="Without menu">Zones</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-without-navbar.html" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-calendar"></i>
-                    <div data-i18n="Without navbar">Planification</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-container.html" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-show"></i>
-                    <div data-i18n="Container">Suivi et Rapports</div>
-                  </a>
-                </li>
-                
-
-              </ul>
-            </li>
+           <li class="menu-item">
+  <a href="javascript:void(0);" class="menu-link menu-toggle">
+    <i class="menu-icon tf-icons bx bx-recycle"></i>
+    <div>Opération</div>
+  </a>
+  <ul class="menu-sub">
+    <li class="menu-item">
+      <a href="{{ route('zones.index') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-map"></i>
+        <div>Zones</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="{{ route('planifications.index') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-calendar"></i>
+        <div>Planification</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="{{ route('suivi_collecte.index') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-show"></i>
+        <div>Suivi des collectes</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="{{ route('rapports.index') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-bar-chart-alt-2"></i>
+        <div>Rapports statistiques</div>
+      </a>
+    </li>
+  </ul>
+</li>
 
             <!-- Annuaire -->
             <li class="menu-item">
@@ -61,7 +63,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="pages-account-settings-account.html" class="menu-link">
+                  <a href="{{ route('clients.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-user"></i>
                     <div data-i18n="Account">Client</div>
                   </a>
@@ -91,25 +93,31 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="ui-accordion.html" class="menu-link">
+                  <a href="{{ route('produits.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-box"></i>
                     <div data-i18n="Accordion">Produits</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="ui-alerts.html" class="menu-link">
+                  <a href="{{ route('inventaire.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-list-check"></i>
                     <div data-i18n="Alerts">Inventaire</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="ui-alerts.html" class="menu-link">
+                  <a href="{{ route('stock-entree.create') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-plus-circle"></i>
+                    <div data-i18n="Alerts">Entrée Stock</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="{{ route('mouvements.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-transfer"></i>
                     <div data-i18n="Alerts">Mouvements</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="ui-alerts.html" class="menu-link">
+                  <a href="{{ route('alertes.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-bell"></i>
                     <div data-i18n="Alerts">Alertes stock</div>
                   </a>
@@ -130,26 +138,41 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="forms-basic-inputs.html" class="menu-link">
+                  <a href="{{ route('commandes.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-cart"></i>
                     <div data-i18n="Basic Inputs">Commande</div>
                   </a>
                 </li>
+             
                 <li class="menu-item">
-                  <a href="forms-input-groups.html" class="menu-link">
+                  <a href="{{ route('paiements.create') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-credit-card"></i>
                     <div data-i18n="Input groups">Paiement</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="forms-input-groups.html" class="menu-link">
+                  <a href="{{ route('paiements.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-receipt"></i>
                     <div data-i18n="Input groups">Liste des Paiement</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="{{ route('abonnements.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-news"></i>
+                    <div>Abonnements</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="{{ route('abonnements.create') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-plus-circle"></i>
+                    <div>Nouvel abonnement</div>
                   </a>
                 </li>
               
               </ul>
             </li>
+
+         
            
             
           <!-- Configuration -->
@@ -157,35 +180,19 @@
   <span class="menu-header-text">Configuration</span>
      </li>
 
-      <li class="menu-item">
-     <a href="javascript:void(0);" class="menu-link menu-toggle">
-    <i class="menu-icon tf-icons bx bx-cog"></i>
-    <div>Paramètres système</div>
-     </a>
-
-
-
-    <!-- Paramètres plateforme -->
-   
-
-    <!-- Notifications -->
     <li class="menu-item">
-      <a href="#" class="menu-link">
+      <a href="{{ route('parametres.index') }}" class="menu-link">
+        <i class="menu-icon tf-icons bx bx-cog"></i>
+        <div>Paramètres système</div>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="{{ route('notifications.index') }}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-bell"></i>
         <div>Notifications</div>
       </a>
     </li>
-    <!-- Logs -->
-    <li class="menu-item">
-      <a href="#" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-history"></i>
-        <div>Historique système</div>
-      </a>
-    </li>
-    
 
-     </ul>
-     </li>
             <!-- Components -->
              <!-- <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li> -->
            

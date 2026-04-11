@@ -15,6 +15,7 @@ class AgentsController extends Controller
     public function index()
     {
         $agents = Agents::with('user')->latest()->paginate(15);
+
         return view('agents.index', compact('agents'));
     }
 
@@ -43,10 +44,13 @@ class AgentsController extends Controller
                 'address' => $request->address,
             ]);
 
+            $lastAgent = Agents::latest()->first();
+            $number = $lastAgent ? $lastAgent->id + 1 : 1;
+            $matricule = 'AGT-'.str_pad($number, 4, '0', STR_PAD_LEFT);
             // Création de l'agent lié
             Agents::create([
                 'user_id' => $user->id,
-                'matricul' => $request->matricul,
+                'matricul' => $matricule,
                 'qualification' => $request->qualification,
             ]);
         });
@@ -57,11 +61,12 @@ class AgentsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Agents $agents)
-    {
-        $agents->load('user');
-        return view('agents.show', compact('agents'));
-    }
+    public function show(Agents $agent)
+{
+    $agent->load('user'); // relation
+
+    return view('agents.show', compact('agent'));
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -69,38 +74,39 @@ class AgentsController extends Controller
     public function edit(Agents $agent)
     {
         $agent->load('user');
+
         return view('agents.edit', compact('agent'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-   public function update(Request $request, Agents $agent)   // ← change ici aussi
-{
-    DB::transaction(function () use ($request, $agent) {
-        $agent->user->update([
-            'name'      => $request->nom,
-            'email'     => $request->email,
-            'telephone' => $request->telephone,
-            'statut'    => $request->statut ?? $agent->user->statut,
-            'address'   => $request->address,
-        ]);
-
-        $agent->update([
-            'matricul'      => $request->matricul,
-            'qualification' => $request->qualification,
-        ]);
-
-        if ($request->filled('mot_de_passe')) {
+    public function update(Request $request, Agents $agent)   // ← change ici aussi
+    {
+        DB::transaction(function () use ($request, $agent) {
             $agent->user->update([
-                'password' => bcrypt($request->mot_de_passe),
+                'name' => $request->nom,
+                'email' => $request->email,
+                'telephone' => $request->telephone,
+                'statut' => $request->statut ?? $agent->user->statut,
+                'address' => $request->address,
             ]);
-        }
-    });
 
-    return redirect()->route('agents.index')
-                     ->with('success', 'Agent mis à jour avec succès !');
-}
+            $agent->update([
+                'matricul' => $request->matricul,
+                'qualification' => $request->qualification,
+            ]);
+
+            if ($request->filled('mot_de_passe')) {
+                $agent->user->update([
+                    'password' => bcrypt($request->mot_de_passe),
+                ]);
+            }
+        });
+
+        return redirect()->route('agents.index')
+            ->with('success', 'Agent mis à jour avec succès !');
+    }
 
     /**
      * Remove the specified resource from storage.

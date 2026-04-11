@@ -2,27 +2,35 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Collecteur extends Model
 {
     use HasFactory;
+
     protected $table = 'collecteurs';
+
     protected $fillable = [
         'user_id',
         'numpermis',
         'matricul',
-        'zone_id'
+        'zone_id',
     ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function zone(): BelongsTo{
+    public function zone(): BelongsTo
+    {
         return $this->belongsTo(Zone::class);
     }
-    
+
+    public function planifications()
+    {
+        return $this->hasMany(Planification::class);
+    }
 }
